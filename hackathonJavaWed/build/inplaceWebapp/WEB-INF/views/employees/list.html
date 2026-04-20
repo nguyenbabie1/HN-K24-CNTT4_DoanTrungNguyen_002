@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly nhan vien</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 32px; }
+        table { border-collapse: collapse; margin-top: 16px; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; }
+        a, button { border: 1px solid #333; border-radius: 4px; color: #111; cursor: pointer; display: inline-block; padding: 8px 12px; text-decoration: none; }
+        button { background: white; font: inherit; }
+        form { display: inline; }
+        .actions { display: flex; gap: 8px; }
+        .empty { background: #f8f8f8; border: 1px solid #ddd; margin-top: 16px; padding: 16px; }
+    </style>
+</head>
+<body>
+<h1>Quan ly danh sach nhan vien</h1>
+
+<a th:href="@{/employees/add}">Them moi nhan vien</a>
+
+<div class="empty" th:if="${#lists.isEmpty(employeeList)}">
+    Chua co nhan vien nao trong danh sach.
+</div>
+
+<table th:if="${!#lists.isEmpty(employeeList)}">
+    <thead>
+    <tr>
+        <th>Ma NV</th>
+        <th>Ho ten</th>
+        <th>Chuc vu</th>
+        <th>Luong</th>
+        <th>Thao tac</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employeeList}">
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.fullName}"></td>
+        <td th:text="${employee.position}"></td>
+        <td th:text="${employee.salary}"></td>
+        <td class="actions">
+            <a th:href="@{/employees/{id}/edit(id=${employee.id})}">Sua</a>
+            <form th:action="@{/employees/{id}/delete(id=${employee.id})}" method="post"
+                  onsubmit="return confirm('Ban co chac chan muon xoa nhan vien nay?');">
+                <button type="submit">Xoa</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

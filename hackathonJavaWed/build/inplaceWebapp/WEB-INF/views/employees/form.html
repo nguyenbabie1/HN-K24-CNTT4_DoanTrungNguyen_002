@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${formTitle}">Nhan vien</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 32px; max-width: 640px; }
+        label { display: block; font-weight: bold; margin-top: 14px; }
+        input { box-sizing: border-box; margin-top: 6px; padding: 8px; width: 100%; }
+        .error { color: #c62828; display: block; margin-top: 4px; }
+        .actions { display: flex; gap: 8px; margin-top: 18px; }
+        a, button { border: 1px solid #333; border-radius: 4px; color: #111; cursor: pointer; display: inline-block; padding: 8px 12px; text-decoration: none; }
+        button { background: white; font: inherit; }
+    </style>
+</head>
+<body>
+<h1 th:text="${formTitle}">Nhan vien</h1>
+
+<form th:action="@{${formAction}}" th:object="${employee}" method="post">
+    <label for="fullName">Ho ten</label>
+    <input id="fullName" type="text" th:field="*{fullName}">
+    <span class="error" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
+
+    <label for="position">Chuc vu</label>
+    <input id="position" type="text" th:field="*{position}">
+    <span class="error" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></span>
+
+    <label for="salary">Luong</label>
+    <input id="salary" type="number" step="0.01" th:field="*{salary}">
+    <span class="error" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}"></span>
+
+    <div class="actions">
+        <button type="submit">Luu</button>
+        <a th:href="@{/employees}">Quay lai</a>
+    </div>
+</form>
+</body>
+</html>
